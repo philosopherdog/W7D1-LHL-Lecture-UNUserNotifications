@@ -38,13 +38,13 @@
 
 * `UNUserNotifications` was introduced in iOS 10. So, you might need to use both API's in an app that is backward compatible. :(
 
-* `UNUserNotification`s is way more powerful. (It goes without saying, prefer current API's over legacy ones).
+* `UNUserNotifications` is way more powerful. (It goes without saying, prefer current API's over legacy ones).
 
-* `UNUserNotification`s supports media attachments with the `UNNotificationAttachment` object. This allows attaching audio, video and images to your notifications. 
+* `UNUserNotifications` supports media attachments with the `UNNotificationAttachment` object. This allows attaching audio, video and images to your notifications. 
 
 These attachments can't be sent remotely. Instead you will use a notification service extension to modify your remote notification before it is delivered which allows you to pull in resources locally or remotely. (see [UNNotificationServiceExtension](https://developer.apple.com/documentation/usernotifications/unnotificationserviceextension) for more details.) 
 
-# Demo LocalNotification<=
+# ✅ Demo Local Notification
 
 #### The steps for configuring a local notification are as follows:
 
@@ -54,14 +54,96 @@ These attachments can't be sent remotely. Instead you will use a notification se
 1. Create a `UNNotificationRequest` object with the content and trigger information.
 1. Call the `addNotificationRequest:withCompletionHandler:` method to schedule the notification.
 
-# Remote Notification Demo
+# ✅ Remote Notification Demo
 
+1. RN require a device, and an Apple Developer Membership.
+1. We will fake out the server using an app called [Pusher](https://github.com/noodlewerk/NWPusher).
+1. Simple install: `brew cask install pusher` 
+
+## Setup Push Service
+
+1. Make sure you App's `Bundle Identifier` is unique.
+1. Enable Push Service in the `Capabilities Tab` of your Xcode project.
+![](Images/push.png)
+1. Log in to [https://developer.apple.com/](https://developer.apple.com/) and verify that your app has push notifications enabled (it will be amber).
+1. Edit the permissions and click the *Create Certificate...* button for the *Development* type. Follow the instructions. <br><br>![](Images/create_cert.png)
+
+1. After you upload the certification the amber light should turn to green.
+
+
+![](Images/enabled.png)
+
+```swift
+import UIKit
+import UserNotifications
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+  
+  var window: UIWindow?
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    registerForNotifications(remote: true)
+    return true
+  }
+}
+
+
+extension AppDelegate {
+  // Register to receive notifications
+  
+  private func registerForNotifications(remote: Bool = false) {
+    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+      (granted, error) in
+      print(#line, "Permission granted: \(granted)")
+      guard granted else { return }
+      self.checkNotificationSettings(remote: remote)
+    }
+  }
+  
+  private func checkNotificationSettings(remote: Bool) {
+    UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+      print(#line, "Settings: \(settings)")
+      guard settings.authorizationStatus == .authorized else {
+        // Good place to notify the user how not having notifications might affect their experience
+        return
+      }
+      // Register for Remove Notifications
+      if remote {
+        DispatchQueue.main.async {
+          UIApplication.shared.registerForRemoteNotifications()
+        }
+      }
+    }
+  }
+  
+  // Remove notification Callbacks
+  
+  func application(_ application: UIApplication,
+                   didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    let tokenParts = deviceToken.map { data -> String in
+      return String(format: "%02.2hhx", data)
+    }
+    let token = tokenParts.joined()
+    print("Device Token: \(token)")
+    print(#line, token)
+    // you could send this token to a server, but don't rely on it because it will change if the user deletes the app for example
+  }
+  
+  func application(_ application: UIApplication,
+                   didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    print("Failed with error: \(error)")
+  }
+}
+
+```
 
 
 # References
 
 * [Local and Remote Notification Programming Guide](https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/)
 
-### REST Requests For Today’s Assignment
+* For Background Notifications [See](https://www.google.ca/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwj8-JrtisLZAhVHdt8KHUIqB5wQygQIMDAA&url=https%3A%2F%2Fdeveloper.apple.com%2Flibrary%2Fcontent%2Fdocumentation%2FNetworkingInternet%2FConceptual%2FRemoteNotificationsPG%2FCreatingtheNotificationPayload.html%23%2F%2Fapple_ref%2Fdoc%2Fuid%2FTP40008194-CH10-SW8&usg=AOvVaw3A58cCkTEEdVeYOPcvIiW3).
+
+---
 
 # CloudTracker REST Requests
