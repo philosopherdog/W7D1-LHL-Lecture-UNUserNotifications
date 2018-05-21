@@ -33,8 +33,9 @@ autoscale: true
 
 ## [fit]UILocalNotifications vs UNUserNotifications
 * Note there are 2 Notification API's. `UILocalNotifictions`, and the new system called `UNUserNotifications`. 
-* `UNUserNotifications` was introduced in iOS 10. So, you might need to use both API's in an app that is backward compatible. :(
-* `UNUserNotifications` is way more powerful. (It goes without saying, prefer current API's over legacy ones).
+* `UNUserNotifications` was introduced in iOS 10, watchOS 3, and tvOS 10. 
+* You might need to use both API's in an app that is backward compatible. :(
+* `UNUserNotifications` is way more powerful. (prefer current API's over legacy ones).
 
 ## [fit]Displaying Media & Attachments
 * User Notifications can display alerts, and play default or custom sounds to the user, as well as badge the app icon with a number. 
@@ -68,6 +69,8 @@ autoscale: true
 ## Push Service Certificate
 1. Log in to [https://developer.apple.com/](https://developer.apple.com/) and verify that your app has push notifications enabled (it will be amber).
 1. Edit the permissions and click the *Create Certificate...* button for the *Development* type. Follow the instructions.
+1. Add this downloaded certificate to the Mac keychain login.
+1. Restart Pusher. Find the entry in Pusher and add the token. Test!
 
 ## Create Certificate
  ![inline 100%](Images/create_cert.png)
@@ -76,7 +79,7 @@ autoscale: true
 
 ![inline](Images/enabled.png)
 
-After you upload the certification the amber light should turn to green.
+After you upload the certificate the amber light should turn to green.
 
 ## Codes
 
@@ -168,6 +171,8 @@ extension AppDelegate {
 * [Local and Remote Notification Programming Guide](https://apple.co/2GyY4b0)
 
 * [Background Notifications](https://apple.co/2Gxahgr).
+
+* [Push Notifications Tutorial](https://www.raywenderlich.com/156966/push-notifications-tutorial-getting-started)
 
 
 ## [fit]CloudTracker <br>REST <br>Requests
