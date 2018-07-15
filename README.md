@@ -15,10 +15,12 @@ autoscale: true
 * Let's say the user wants to setup a calendar event inside your app. 
 * User notifications can alert the user of this event when your app is not running.
 * User notifications can be used to pass the user a message. 
-* Like out calendar event, or it could be a timer event, location geofencing event, or some important data change on a remote server.
+* Events can trigger trigger a notification.
+* Eg. Calendar events, a timer event, location geofencing event, or some important data change on a remote server.
 * There are 2 types of user notifications on iOS: `local` and `remote`.
-* Local notifications are scheduled and sent by the app itself (no internet needed).
 * Local and remote notifications look and sound the same from the user's point of view.
+* Local notifications are scheduled and sent by the app itself (no internet needed).
+
 
 ## [fit]Remote Notifications
 * Remote notifications (aka `Push Notifications`) involve a remote server.
@@ -28,14 +30,14 @@ autoscale: true
 * Most BAAS systems also include push notification support. This is true of CloudKit, Firebase, and Parse.
 * But it is pretty easy to roll your own push notification service.
 
-## [fit]APNS
+## APNS
 ![inline](Images/diagram4.jpg)
 
 ## [fit]UILocalNotifications vs UNUserNotifications
 * Note there are 2 Notification API's. `UILocalNotifictions`, and the new system called `UNUserNotifications`. 
 * `UNUserNotifications` was introduced in iOS 10, watchOS 3, and tvOS 10. 
-* You might need to use both API's in an app that is backward compatible. :(
-* `UNUserNotifications` is way more powerful. (prefer current API's over legacy ones).
+* You might need to use both API's in an app that supports iOS 9 or earlier. 😢
+* `UNUserNotifications` is way more powerful. (🎗prefer current API's over legacy ones).
 
 ## [fit]Displaying Media & Attachments
 * User Notifications can display alerts, and play default or custom sounds to the user, as well as badge the app icon with a number. 
@@ -44,13 +46,13 @@ autoscale: true
 
 ## [fit]Configuring UNUserNotifications
 
-1. Request authorization using `requestAuthorization(options:completionHandler:)` (same for both local and remote notifications)
+1. Request authorization (if your notifications require user interaction) using: `requestAuthorization(options:completionHandler:)` (same for both local and remote notifications).
 1. Create and configure a `UNMutableNotificationContent` object with the notification details.
 1. Create a `UNCalendarNotificationTrigger`, `UNTimeIntervalNotificationTrigger`, or `UNLocationNotificationTrigger` object to describe the conditions under which the notification is delivered.
 1. Create a `UNNotificationRequest` object with the content and trigger information.
 1. Call the `addNotificationRequest:withCompletionHandler:` method to schedule the notification.
 
-## [fit]✅ Demo Local Notification
+## [fit]✅<br> Demo <br>Local<br> Notification
 
 ## [fit]Remote Notifications Requirements
 
@@ -60,7 +62,7 @@ autoscale: true
 
 ## [fit]Setup Push Service
 
-1. Make sure you App's `Bundle Identifier` is unique.
+1. Make sure your App's `Bundle Identifier` is unique.
 1. Enable Push Service in the `Capabilities Tab` of your Xcode project.
 
 ## Enable Push Service Xcode
@@ -84,15 +86,14 @@ After you upload the certificate the amber light should turn to green.
 ## Codes
 
 ```swift
-
-import UIKit
 import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+  func application(_ application: UIApplication, 
+      didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     registerForNotifications(remote: true)
     return true
   }
@@ -108,7 +109,8 @@ extension AppDelegate {
   // Register to receive notifications
   
   private func registerForNotifications(remote: Bool = false) {
-    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+    UNUserNotificationCenter.current().requestAuthorization(options: 
+    [.alert, .sound, .badge]) {
       (granted, error) in
       print(#line, "Permission granted: \(granted)")
       guard granted else { return }
@@ -175,4 +177,4 @@ extension AppDelegate {
 * [Push Notifications Tutorial](https://www.raywenderlich.com/156966/push-notifications-tutorial-getting-started)
 
 
-## [fit]CloudTracker <br>REST <br>Requests
+## [fit]CloudTracker<br>REST<br>Requests
