@@ -24,7 +24,7 @@
 		AA4F398420FCD4DE0070AF85 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA4F398720FCD4DE0070AF85 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA4F398920FCD4DE0070AF85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA4F398F20FCD8000070AF85 /* sound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = sound.caf; path = ../../sound.caf; sourceTree = "<group>"; };
+		AA4F398F20FCD8000070AF85 /* sound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound.caf; sourceTree = "<group>"; };
 		AA4F399120FCD8650070AF85 /* image1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image1.png; path = ../../image1.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -42,6 +42,7 @@
 		AA4F397120FCD4DD0070AF85 = {
 			isa = PBXGroup;
 			children = (
+				AA4F398F20FCD8000070AF85 /* sound.caf */,
 				AA4F397C20FCD4DD0070AF85 /* LocalNotificationsExample */,
 				AA4F397B20FCD4DD0070AF85 /* Products */,
 			);
@@ -59,7 +60,6 @@
 			isa = PBXGroup;
 			children = (
 				AA4F397D20FCD4DD0070AF85 /* AppDelegate.swift */,
-				AA4F398F20FCD8000070AF85 /* sound.caf */,
 				AA4F399120FCD8650070AF85 /* image1.png */,
 				AA4F397F20FCD4DD0070AF85 /* ViewController.swift */,
 				AA4F398120FCD4DD0070AF85 /* Main.storyboard */,

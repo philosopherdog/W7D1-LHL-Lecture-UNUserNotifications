@@ -45,9 +45,9 @@ class ViewController: UIViewController {
           // for adding the image attachment
           let url = Bundle.main.url(forResource: "image1", withExtension: "png")
           let imageAttachment = try! UNNotificationAttachment(identifier: "image1", url: url!)
-          let url2 = Bundle.main.url(forResource: "sound", withExtension: "caf")
-          let soundAttachment = try! UNNotificationAttachment(identifier: "sound1", url: url2!)
-          content.attachments = [imageAttachment, soundAttachment]
+//          let url2 = Bundle.main.url(forResource: "sound", withExtension: "caf")
+//          let soundAttachment = try! UNNotificationAttachment(identifier: "sound1", url: url2!)
+          content.attachments = [imageAttachment]
           
           // alert text
           content.title = "My title"
@@ -55,9 +55,9 @@ class ViewController: UIViewController {
           content.body = "This is the body"
           
           // Sound
-          //        if soundEnabled {
-          //          content.sound = UNNotificationSound(named: "sound.caf")
-          //        }
+                  if soundEnabled {
+                    content.sound = UNNotificationSound(named: "sound.caf")
+                  }
         }
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5.0, repeats: false)
