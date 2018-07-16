@@ -15,7 +15,7 @@ autoscale: true
 * Let's say the user wants to setup a calendar event inside your app. 
 * User notifications can alert the user of this event when your app is not running.
 * User notifications can be used to pass the user a message. 
-* Events can trigger trigger a notification.
+* Certain events can trigger a notification.
 * Eg. Calendar events, a timer event, location geofencing event, or some important data change on a remote server.
 * There are 2 types of user notifications on iOS: `local` and `remote`.
 * Local and remote notifications look and sound the same from the user's point of view.
